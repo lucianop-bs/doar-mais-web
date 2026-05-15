@@ -43,6 +43,7 @@ cd doarmais-api
 ./mvnw quarkus:dev
 ```
 A API estará disponível em `http://localhost:8080`.
+> **Nota:** Por padrão, o projeto utiliza banco de dados **H2 (em memória)** para facilitar os testes. Os dados são resetados a cada reinicialização, mas são populados automaticamente pelo arquivo `import.sql`.
 
 ### 2. Rodando o Frontend
 ```bash
@@ -51,6 +52,35 @@ npm install
 npm start
 ```
 O frontend estará disponível em `http://localhost:4200`.
+
+---
+
+## 🧪 Como Testar a Aplicação
+
+Para validar o funcionamento completo (fluxo de login e doação), você pode utilizar as credenciais pré-configuradas:
+
+| Perfil | E-mail | Senha |
+| :--- | :--- | :--- |
+| **Administrador** | `admin@doarmais.com` | `admin123` |
+| **Doador** | `doador@gmail.com` | `123456` |
+
+### Fluxo Sugerido de Teste:
+1.  Acesse `http://localhost:4200` e faça login com a conta de **Administrador**.
+2.  Navegue pelo **Dashboard** para ver as estatísticas atuais.
+3.  Simule uma **Nova Doação** selecionando os itens (Arroz, Feijão, etc).
+4.  Verifique a atualização do estoque na **Tabela de Doações**.
+
+---
+
+## 🛣️ Endpoints Principais (API)
+
+| Método | Endpoint | Descrição |
+| :--- | :--- | :--- |
+| `POST` | `/login` | Autenticação e geração de token JWT. |
+| `POST` | `/usuario` | Cadastro de novos usuários. |
+| `GET` | `/doacao` | Listagem de todas as doações realizadas. |
+| `POST` | `/doacao` | Registro de uma nova doação (Protegido por JWT). |
+| `GET` | `/cesta-basica/total` | Retorna o total de cestas montadas. |
 
 ---
 
