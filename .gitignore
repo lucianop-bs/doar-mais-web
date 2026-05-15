@@ -6,8 +6,7 @@
 .DS_Store
 Thumbs.db
 
-# Project specific
-**/node_modules/
-**/target/
-**/.angular/
-**/dist/
+# Logs
+*.log
+log_de_auditoria.txt
+log_de_erros.txt
