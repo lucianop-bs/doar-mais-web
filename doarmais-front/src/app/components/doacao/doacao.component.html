@@ -1,0 +1,86 @@
+<div class="container-doacao">
+  <div>
+    <div class="title">
+      <h4>Faça sua doação!</h4>
+    </div>
+    <form [formGroup]="formItensDoacao" (ngSubmit)="onDoacaoSubmit()">
+      <div class="form-input" style="position: relative">
+        <label>Item doado</label>
+        <input
+          type="text"
+          formControlName="item"
+          placeholder="Pesquise ou adicione..."
+          (focus)="mostrarDropdown = true"
+          (blur)="esconderDropdown()"
+          autocomplete="on"
+        />
+        @if (mostrarDropdown && produtosFiltrados().length > 0) {
+          <ul class="lista-customizada shadow">
+            @for (produto of produtosFiltrados(); track produto) {
+              <li (mousedown)="selecionarItem(produto)">
+                {{ produto }}
+              </li>
+            }
+          </ul>
+        }
+      </div>
+      <div class="form-input">
+        <label>Quantidade</label>
+        <input type="number" formControlName="quantidade" min="1" step="1" />
+      </div>
+      <button type="submit" class="shadow button-style" >
+        Adicionar Item
+      </button>
+      <button
+        type="button"
+        (click)="adicionarCesta()"
+        class="shadow button-style"
+      >
+        Cesta Completa
+      </button>
+    </form>
+
+    @if (listaDeItens().length > 0) {
+      <table class="tabela-doacoes">
+        <thead>
+          <tr>
+            <th class="col-nome">Produto</th>
+            <th class="col-qtd">Qtd.</th>
+            <th class="col-acao">Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of listaDeItens(); track $index) {
+            <tr>
+              <td>{{ item.item }}</td>
+              <td>{{ item.quantidade }}</td>
+              <td>
+                <button class="btn-remover button-style" type="submit" (click)="removerItem($index)">
+                  Remover
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+    @if (listaDeItens().length > 0) {
+      <button type="submit" class="shadow button-style" (click)="salvar()">DOAR</button>
+    }
+  </div>
+</div>
+@if (errorMessage()) {
+  <div
+    class="alert alert-danger d-flex align-items-center alert-dismissible fade show alert-top"
+    role="alert"
+  >
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+    {{ errorMessage() }}
+    <button
+      type="button"
+      class="btn-close"
+      (click)="errorMessage.set(null)"
+      aria-label="Close"
+    ></button>
+  </div>
+}

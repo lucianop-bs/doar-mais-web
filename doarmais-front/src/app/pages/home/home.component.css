@@ -1,0 +1,28 @@
+.max-w {
+  max-width: 700px;
+}
+.bg-color {
+  background-color: #114B79;
+}
+
+.btn-color {
+  background: #f08221;
+  &:hover {
+    background: #d16a15;
+  }
+}
+
+.btn-color-secondary {
+  color: #f08221;
+  border: 2px solid #f08221;
+  &:hover {
+    background-color: #f08221;
+    color: #ffffff;
+    border-color: #f08221;
+  }
+}
+
+.img-size{
+  width: 1000px;
+
+}

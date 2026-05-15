@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-color shadow-sm">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" routerLink="/">
+      <img src="/images/logo.png" alt="logo do projeto" class="img-logo" />
+    </a>
+    <button
+      class="navbar-toggler btn-hamburger"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse text" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+         @if (!isLogged()) {
+        <li class="nav-item text">
+          <a class="nav-link text" routerLink="/home" routerLinkActive="active">Home</a>
+        </li>
+      }
+        @if (isLogged()) {
+          <li class="nav-item text">
+            <a class="nav-link text" routerLink="/dashboard" routerLinkActive="active">Estoque</a>
+          </li>
+        }
+        @if (!isLogged()) {
+          <li class="nav-item">
+            <a class="nav-link text" routerLink="/login" routerLinkActive="active">Login</a>
+          </li>
+        } @else {
+
+        }
+        @if (!isLogged()) {
+          <li class="nav-item">
+            <a class="btn btn-outline-light ms-lg-3 btn-color btn-text" routerLink="/cadastro"
+              >Cadastrar</a
+            >
+          </li>
+        } @else {
+          <li class="nav-item">
+            <a class="btn btn-outline-light ms-lg-3 btn-color btn-text" (click)="logout()" routerLink="/home">Sair</a>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</nav>

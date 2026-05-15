@@ -1,0 +1,13 @@
+.text-color{
+    color: var(--brand-blue);
+}
+.min-h{
+      min-height: calc(100vh - 56px - 4rem)
+}
+.btn-color{
+    background-color: var(--brand-blue);
+    &:hover{
+        background-color: var(--brand-blue-hover);
+        color: rgb(255, 255, 255);    
+    }
+}

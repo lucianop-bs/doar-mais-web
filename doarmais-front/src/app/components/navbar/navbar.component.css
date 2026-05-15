@@ -1,0 +1,31 @@
+.img-logo {
+  width: 200px;
+  object-fit: contain;
+}
+
+.bg-color {
+  background-color: #ffffff;
+}
+
+.btn-color {
+  background-color: var(--brand-orange);
+}
+
+.btn-text {
+  font-weight: bold;
+}
+
+.btn-hamburger {
+  background-color: var(--brand-orange);
+}
+
+.text {
+  color: var(--brand-blue);
+  font-weight: 900;
+}
+.nav-link.active {
+    color: var(--brand-orange);
+    font-weight: 900;
+    text-decoration:underline;
+    text-decoration-thickness: 10px;
+}
