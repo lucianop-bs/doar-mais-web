@@ -1,0 +1,13 @@
+# IDEs
+.idea/
+.vscode/
+
+# System
+.DS_Store
+Thumbs.db
+
+# Project specific
+**/node_modules/
+**/target/
+**/.angular/
+**/dist/
