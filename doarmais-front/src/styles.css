@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Nunito:wght@700;800&display=swap');
+:root {
+  /* --- CORES PRINCIPAIS (BRAND) --- */
+  --brand-orange: #f08221;
+  --brand-orange-hover: #d16a15;
+  --brand-orange-light: #fdf2e8;
+
+  --brand-blue: #114b79;
+  --brand-blue-hover: #0b3556;
+  --brand-blue-light: #e7eef3;
+
+  /* --- CORES SEMÂNTICAS (FEEDBACK) --- */
+  --success: #059669;
+  --warning: #d97706;
+  --error: #dc2626;
+
+  /* --- TONS NEUTROS (ESTRUTURA) --- */
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --border-color: #e2e8f0;
+  --bg-page: #f8fafc;
+  --bg-surface: #ffffff;
+
+  /* --- TIPOGRAFIA --- */
+  --font-titles: 'Nunito', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* --- ESTRUTURA E UI --- */
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --transition: all 0.2s ease-in-out;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* Exemplo de aplicação básica */
+body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-titles);
+  color: var(--brand-blue);
+}
+
+.min-h {
+  min-height: calc(100vh - 56px - 3rem);
+}
+
+.container-principal {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
