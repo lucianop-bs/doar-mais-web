@@ -1,97 +1,94 @@
-# Doar+ (Doar Mais) 🤝
+# Doar+ (Doar Mais) 🤝 🌐
 
-O **Doar+** é uma plataforma fullstack desenvolvida para facilitar a gestão de doações de alimentos e a montagem de cestas básicas para famílias carentes. O projeto visa conectar doadores a centros de distribuição, garantindo transparência e eficiência no controle de estoque.
+![Quarkus](https://img.shields.io/badge/Quarkus-3.x-FF0044?style=for-the-badge&logo=quarkus)
+![Angular](https://img.shields.io/badge/Angular-17+-DD0031?style=for-the-badge&logo=angular)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript)
+![Java](https://img.shields.io/badge/Java-17+-orange?style=for-the-badge&logo=openjdk)
+![JWT](https://img.shields.io/badge/JWT-Authentication-black?style=for-the-badge&logo=json-web-tokens)
 
----
-
-## 🏗️ Estrutura do Repositório
-
-Este repositório é um monorepo que contém tanto o backend quanto o frontend da aplicação:
-
-- **[doarmais-api](./doarmais-api/):** Backend desenvolvido em Java com Quarkus.
-- **[doarmais-front](./doarmais-front/):** Frontend desenvolvido em TypeScript com Angular.
+O **Doar+** é uma plataforma fullstack moderna desenvolvida para transformar a gestão de doações. Através de uma interface intuitiva e uma API de alta performance, o sistema conecta doadores e centros de distribuição, garantindo que nenhum item seja desperdiçado e que as cestas básicas cheguem com eficiência às famílias.
 
 ---
 
-## 🛠️ Tecnologias Principais
+## 🏗️ Estrutura do Ecossistema
 
-### Backend
-- **Framework:** [Quarkus](https://quarkus.io/) (Supersonic Subatomic Java)
-- **Persistência:** Hibernate ORM com Panache
-- **Banco de Dados:** H2/PostgreSQL
-- **Segurança:** Autenticação via JWT (JSON Web Token)
-- **Arquitetura:** RESTful API com padrões DAO e BO
+Este é um monorepo organizado para separar claramente as responsabilidades:
 
-### Frontend
-- **Framework:** [Angular](https://angular.dev/) (v17+)
-- **Estilização:** Angular Material & Vanilla CSS
-- **Estado:** Services e RxJS para reatividade
-- **Segurança:** Auth Guards e Interceptors para gestão de tokens
+```text
+doar-mais/
+├── ⚙️ doarmais-api/    # Backend (Quarkus + Java)
+│   ├── src/main/java   # Lógica REST, BO, DAO
+│   └── import.sql      # Dados iniciais automáticos
+└── 💻 doarmais-front/  # Frontend (Angular + TypeScript)
+    ├── src/app         # Componentes, Services, Guards
+    └── src/styles.css  # Estilização global
+```
 
 ---
 
-## 🚀 Como Executar o Projeto
+## 🛠️ Stack Tecnológica
+
+### **Backend (The Core)**
+- **Framework:** Quarkus (Supersonic Subatomic Java).
+- **Segurança:** Autenticação baseada em **JWT (JSON Web Token)**.
+- **Persistência:** Hibernate ORM com Panache (Padrão Repository/Active Record).
+- **Banco:** H2 (Dev) / PostgreSQL (Prod Ready).
+
+### **Frontend (The Experience)**
+- **Framework:** Angular 17+ com Componentes Standalone.
+- **UI/UX:** Angular Material para componentes elegantes e responsivos.
+- **Reatividade:** RxJS para gestão de fluxos de dados e estados.
+- **Segurança:** Interceptors para injeção de tokens e Guards para proteção de rotas.
+
+---
+
+## 🚀 Guia de Início Rápido
 
 ### Pré-requisitos
-- Java 17+
-- Node.js 18+
-- Angular CLI
+- **Java 17+**
+- **Node.js 18+**
+- **Angular CLI** (`npm install -g @angular/cli`)
 
-### 1. Rodando o Backend (API)
+### 1. Subindo a API
 ```bash
 cd doarmais-api
 ./mvnw quarkus:dev
 ```
-A API estará disponível em `http://localhost:8080`.
-> **Nota:** Por padrão, o projeto utiliza banco de dados **H2 (em memória)** para facilitar os testes. Os dados são resetados a cada reinicialização, mas são populados automaticamente pelo arquivo `import.sql`.
+> A API utiliza o arquivo `import.sql` para popular o banco em memória automaticamente.
 
-### 2. Rodando o Frontend
+### 2. Subindo o Frontend
 ```bash
 cd doarmais-front
 npm install
 npm start
 ```
-O frontend estará disponível em `http://localhost:4200`.
 
 ---
 
-## 🧪 Como Testar a Aplicação
+## 🧪 Ambiente de Teste
 
-Para validar o funcionamento completo (fluxo de login e doação), você pode utilizar as credenciais pré-configuradas:
+Para explorar todas as funcionalidades sem precisar cadastrar novos dados, utilize as contas pré-configuradas:
 
 | Perfil | E-mail | Senha |
 | :--- | :--- | :--- |
-| **Administrador** | `admin@doarmais.com` | `admin123` |
-| **Doador** | `doador@gmail.com` | `123456` |
-
-### Fluxo Sugerido de Teste:
-1.  Acesse `http://localhost:4200` e faça login com a conta de **Administrador**.
-2.  Navegue pelo **Dashboard** para ver as estatísticas atuais.
-3.  Simule uma **Nova Doação** selecionando os itens (Arroz, Feijão, etc).
-4.  Verifique a atualização do estoque na **Tabela de Doações**.
+| **👑 Administrador** | `admin@doarmais.com` | `admin123` |
+| **🤝 Doador** | `doador@gmail.com` | `123456` |
 
 ---
 
-## 🛣️ Endpoints Principais (API)
+## 🛣️ Roadmap de Endpoints (API)
 
-| Método | Endpoint | Descrição |
-| :--- | :--- | :--- |
-| `POST` | `/login` | Autenticação e geração de token JWT. |
-| `POST` | `/usuario` | Cadastro de novos usuários. |
-| `GET` | `/doacao` | Listagem de todas as doações realizadas. |
-| `POST` | `/doacao` | Registro de uma nova doação (Protegido por JWT). |
-| `GET` | `/cesta-basica/total` | Retorna o total de cestas montadas. |
-
----
-
-## 🎓 Contexto Acadêmico
-Este projeto foi desenvolvido como parte do currículo da faculdade, aplicando conceitos de:
-- Desenvolvimento Web Fullstack
-- Segurança de Aplicações
-- Arquitetura de Software
-- Gestão de Banco de Dados
+| Rota | Método | Proteção | Descrição |
+| :--- | :---: | :---: | :--- |
+| `/login` | `POST` | Livre | Autentica e retorna o Token JWT. |
+| `/doacao` | `GET` | JWT | Lista histórico de doações. |
+| `/doacao` | `POST` | JWT | Registra novos itens no sistema. |
+| `/cesta-basica/total` | `GET` | JWT | Retorna potencial de montagem de cestas. |
 
 ---
 
-## 📝 Licença
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+## 👨‍💻 Créditos Acadêmicos
+Projeto desenvolvido como demonstração técnica de integração fullstack, aplicando conceitos avançados de segurança, arquitetura REST e reatividade.
+
+**Autor:** Luciano Oliveira Borges Souza
+**Instituição:** IFG - Campus Luziânia
