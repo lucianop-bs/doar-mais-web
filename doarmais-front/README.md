@@ -1,59 +1,28 @@
-# DoarmaisFront
+# Doar+ Frontend 💻
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.3.
+Interface web moderna e responsiva para o sistema **Doar+**, desenvolvida com Angular.
 
-## Development server
+## 🎨 Funcionalidades da Interface
+- **Dashboard:** Visão geral das doações e impacto.
+- **Fluxo de Doação:** Interface intuitiva para registro de novos itens.
+- **Gestão de Inventário:** Visualização em tempo real do que está disponível.
+- **Área Restrita:** Login e proteção de rotas via Guards.
+- **Interceptors:** Tratamento automático de erros e inclusão de tokens em todas as requisições.
 
-To start a local development server, run:
+## 🛠️ Stack Técnica
+- **Angular:** v17+ (Componentes Standalone).
+- **Angular Material:** Componentes de UI como tabelas, inputs e cards.
+- **RxJS:** Programação reativa para gestão de dados.
+- **CSS3:** Estilização customizada e responsiva.
 
-```bash
-ng serve
-```
+## 📂 Estrutura de Pastas
+- `app/components`: Componentes reutilizáveis (Navbar, Tabelas).
+- `app/pages`: Páginas principais (Login, Dashboard, Cadastro).
+- `app/services`: Comunicação com a API.
+- `app/guards`: Proteção de acesso.
+- `app/models`: Interfaces e tipos TypeScript.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 🚀 Comandos Úteis
+- `npm start`: Inicia o servidor de desenvolvimento.
+- `ng build`: Gera os arquivos de produção na pasta `dist/`.
+- `ng test`: Executa os testes unitários.
