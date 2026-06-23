@@ -11,8 +11,10 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.status === 401) {
-        authService.logout();
-        router.navigate(['/login']);
+        authService.logout().subscribe({
+          complete: () => router.navigate(['/login']),
+          error: () => router.navigate(['/login']),
+        });
       }
 
       let errorMessage = 'Ocorreu um erro inesperado.';

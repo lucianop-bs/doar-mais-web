@@ -4,19 +4,21 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class StorageService {
-  setItem(key: string, value: string): void {
-    localStorage.setItem(key, value);
+  setItem(key: string, value: string, days = 1): void {
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    document.cookie = `${key}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Strict`;
   }
 
   getItem(key: string): string | null {
-    return localStorage.getItem(key);
+    const match = document.cookie.match(new RegExp('(?:^|; )' + key + '=([^;]*)'));
+    return match ? decodeURIComponent(match[1]) : null;
   }
 
   removeItem(key: string): void {
-    localStorage.removeItem(key);
+    document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
   }
 
   clear(): void {
-    localStorage.clear();
+    document.cookie.split(';').forEach((c) => this.removeItem(c.split('=')[0].trim()));
   }
 }

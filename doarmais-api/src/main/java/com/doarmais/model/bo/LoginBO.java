@@ -31,7 +31,7 @@ public class LoginBO {
             }
             String token = tokenBO.gerarToken(user);
 
-            return new LoginResponse(token, user.getNome(), user.getId());
+            return new LoginResponse(token, user.getNome(), user.getId(), user.isAdmin());
 
         } catch (Exception e) {
             Logger.logException("autenticarService", request.email, e);

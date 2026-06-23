@@ -37,8 +37,11 @@
             >
           </li>
         } @else {
+          <li class="nav-item text">
+            <a class="nav-link text" routerLink="/minha-conta" routerLinkActive="active">Minha Conta</a>
+          </li>
           <li class="nav-item">
-            <a class="btn btn-outline-light ms-lg-3 btn-color btn-text" (click)="logout()" routerLink="/home">Sair</a>
+            <a class="btn btn-outline-light ms-lg-3 btn-color btn-text" (click)="logout()">Sair</a>
           </li>
         }
       </ul>
