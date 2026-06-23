@@ -4,6 +4,7 @@ import com.doarmais.model.entity.UsuarioEntity;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -16,5 +17,17 @@ public class UsuarioDAO implements PanacheRepository<UsuarioEntity> {
 
     public void salvar(UsuarioEntity usuario) {
         persist(usuario);
+    }
+
+    public List<UsuarioEntity> listarTodos() {
+        return listAll();
+    }
+
+    public UsuarioEntity buscarPorId(Long id) {
+        return findById(id);
+    }
+
+    public boolean deletarPorId(Long id) {
+        return deleteById(id);
     }
 }
