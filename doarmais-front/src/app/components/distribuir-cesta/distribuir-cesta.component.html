@@ -1,0 +1,24 @@
+<section class="card-panel">
+  <div class="header">
+    <h3>Distribuir Cestas Básicas</h3>
+    <small>Verifique o estoque antes de realizar a entrega.</small>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-row">
+    <div class="field qtd">
+      <label>Qtd Cestas</label>
+      <input type="number" formControlName="quantidadeCestas" min="1" />
+    </div>
+    <div class="field beneficiario">
+      <label>Beneficiário</label>
+      <input
+        type="text"
+        formControlName="beneficiario"
+        placeholder="Nome completo do recebedor"
+      />
+    </div>
+    <button type="submit" class="btn-distribuir" [disabled]="form.invalid">
+      <i class="bi bi-box-arrow-up-right"></i> DISTRIBUIR
+    </button>
+  </form>
+</section>

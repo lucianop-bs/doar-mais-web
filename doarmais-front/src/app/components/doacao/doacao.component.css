@@ -1,23 +1,31 @@
 :host {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  min-height: calc(100vh - 100px);
+  display: block;
   width: 100%;
-  padding: 20px;
 }
 
 .container-doacao {
   width: 100%;
-  max-width: 350px;
-  min-width: 300px;
-  background-color: #e9edf0;
-  padding: 25px;
-  border-radius: 12px;
+  background-color: var(--bg-surface);
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
   box-sizing: border-box;
   height: fit-content;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  margin-left: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary {
+  background-color: var(--brand-blue) !important;
+}
+.btn-secondary:hover {
+  background-color: var(--brand-blue-hover) !important;
+}
+.btn-confirm {
+  background-color: var(--success) !important;
+  margin-top: 10px;
+}
+.btn-confirm:hover {
+  background-color: #047857 !important;
 }
 
 .title {

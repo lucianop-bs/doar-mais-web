@@ -1,0 +1,26 @@
+<section class="card-panel">
+  <h3>Estoque Atual</h3>
+
+  @if (estoque().length === 0) {
+    <p class="empty">Sem itens em estoque.</p>
+  } @else {
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th class="center">Qtd</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (e of estoque(); track e.item) {
+            <tr [class.low]="e.quantidade < 5">
+              <td>{{ e.item }}</td>
+              <td class="center">{{ e.quantidade }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

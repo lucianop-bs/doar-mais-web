@@ -1,3 +1,25 @@
-<div class="container-principal">
-<app-doacao></app-doacao>
+<div class="dashboard">
+  <app-dashboard-header [totalCestas]="total()" (refresh)="refresh()" />
+
+  <div class="dashboard-body">
+    <aside class="dashboard-aside">
+      <app-doacao (doacaoSalva)="refresh()" />
+    </aside>
+
+    <main class="dashboard-main">
+      <div class="tables-grid">
+        <app-historico-doacoes
+          [doacoes]="doacoes()"
+          [isAdmin]="isAdmin()"
+          (remover)="removerDoacao($event)"
+        />
+        <app-distribuicoes [distribuicoes]="distribuicoes()" />
+        <app-estoque [estoque]="estoque()" />
+      </div>
+
+      @if (isAdmin()) {
+        <app-distribuir-cesta (distribuir)="distribuirCesta($event)" />
+      }
+    </main>
+  </div>
 </div>

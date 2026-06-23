@@ -1,0 +1,40 @@
+<section class="card-panel">
+  <h3>Histórico de Doações</h3>
+
+  @if (doacoes().length === 0) {
+    <p class="empty">Nenhuma doação registrada.</p>
+  } @else {
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th class="center">Qtd</th>
+            <th>Doador</th>
+            <th>Data</th>
+            @if (isAdmin()) {
+              <th class="center">Ações</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (d of doacoes(); track d.id) {
+            <tr>
+              <td>{{ d.item }}</td>
+              <td class="center">{{ d.quantidade }}</td>
+              <td>{{ d.doador }}</td>
+              <td>{{ d.data | date: 'dd/MM/yyyy' }}</td>
+              @if (isAdmin()) {
+                <td class="center">
+                  <button class="btn-remover" (click)="confirmarRemocao(d)">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

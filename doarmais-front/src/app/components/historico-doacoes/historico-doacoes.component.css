@@ -1,0 +1,69 @@
+.card-panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-panel h3 {
+  margin: 0 0 12px 0;
+  font-size: 1.1rem;
+}
+
+.empty {
+  color: var(--text-secondary);
+  font-style: italic;
+  margin: 0;
+}
+
+.table-wrapper {
+  overflow: auto;
+  max-height: 400px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+thead {
+  background: var(--brand-blue);
+  color: white;
+  position: sticky;
+  top: 0;
+}
+
+th,
+td {
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+th.center,
+td.center {
+  text-align: center;
+}
+
+tbody tr:nth-child(even) {
+  background: var(--brand-blue-light);
+}
+
+.btn-remover {
+  background: var(--error);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: var(--transition);
+}
+.btn-remover:hover {
+  background: #b91c1c;
+}

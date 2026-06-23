@@ -1,0 +1,30 @@
+<section class="card-panel">
+  <h3>Beneficiários (Entregas)</h3>
+
+  @if (distribuicoes().length === 0) {
+    <p class="empty">Nenhuma cesta distribuída ainda.</p>
+  } @else {
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Beneficiário</th>
+            <th class="center">Cestas</th>
+            <th>Data</th>
+            <th>Por</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (d of distribuicoes(); track d.id) {
+            <tr>
+              <td>{{ d.beneficiario }}</td>
+              <td class="center">{{ d.quantidadeCestas }}</td>
+              <td>{{ d.dataDistribuicao | date: 'dd/MM/yyyy' }}</td>
+              <td>{{ d.usuarioNome }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>
