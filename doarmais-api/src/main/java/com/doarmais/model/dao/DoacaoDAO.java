@@ -18,5 +18,11 @@ public class DoacaoDAO implements PanacheRepository<DoacaoEntity> {
         return listAll();
     }
 
+    public DoacaoEntity buscarPorId(Long id) {
+        return findById(id);
+    }
 
+    public boolean deletarPorId(Long id) {
+        return deleteById(id);
+    }
 }

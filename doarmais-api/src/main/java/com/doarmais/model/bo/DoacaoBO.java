@@ -76,4 +76,32 @@ public class DoacaoBO {
             throw new RuntimeException(e);
         }
     }
+
+    @Transactional
+    public void removerDoacao(Long id) {
+        DoacaoEntity doacao = doacaoDAO.buscarPorId(id);
+        if (doacao == null) {
+            throw new RuntimeException("Doação não encontrada");
+        }
+
+        ItemEntity item = doacao.getItemDoacao();
+        if (item != null && item.getNome() != null) {
+            var estoque = estoqueDAO.findById(item.getNome().getId());
+            int qtdAtual = estoque == null ? 0 : estoque.getQuantidade();
+
+            if (qtdAtual < item.getQtd()) {
+                int distribuidas = item.getQtd() - qtdAtual;
+                throw new RuntimeException(
+                        "Não é possível remover esta doação: " + distribuidas +
+                                " unidade(s) de " + item.getNome().getDescricao() +
+                                " já foram distribuídas."
+                );
+            }
+
+            estoqueDAO.atualizarQuantidade(item.getNome(), -item.getQtd());
+        }
+
+        doacaoDAO.deletarPorId(id);
+        AuditLogger.logAction("removerDoacao", jwt.getSubject());
+    }
 }

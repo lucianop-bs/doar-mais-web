@@ -4,6 +4,7 @@ import com.doarmais.model.bo.DoacaoBO;
 import com.doarmais.model.dto.request.DoacaoRequest;
 import com.doarmais.model.dto.response.DoacaoResponse;
 import io.quarkus.security.Authenticated;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -29,5 +30,13 @@ public class DoacaoController {
     @ResponseStatus(200)
     public List<DoacaoResponse> listarDoacoes() {
         return doacaoBO.listarDoacoes();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @RolesAllowed("ADMIN")
+    @ResponseStatus(204)
+    public void remover(@PathParam("id") Long id) {
+        doacaoBO.removerDoacao(id);
     }
 }
