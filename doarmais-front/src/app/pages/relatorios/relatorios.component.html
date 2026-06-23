@@ -1,0 +1,96 @@
+<div class="page">
+  <header class="page-header">
+    <button class="btn-voltar" (click)="voltar()">
+      <i class="bi bi-arrow-left"></i> Voltar
+    </button>
+    <h2>Relatórios</h2>
+  </header>
+
+  <div class="kpis">
+    <div class="kpi kpi-blue">
+      <span class="kpi-label">Cestas disponíveis</span>
+      <span class="kpi-value">{{ totalDisponivel() }}</span>
+      <small>Montáveis com o estoque atual</small>
+    </div>
+    <div class="kpi kpi-green">
+      <span class="kpi-label">Cestas distribuídas</span>
+      <span class="kpi-value">{{ totalDistribuidas() }}</span>
+      <small>Total já entregue a beneficiários</small>
+    </div>
+    <div class="kpi kpi-orange">
+      <span class="kpi-label">Doadores únicos</span>
+      <span class="kpi-value">{{ doadoresUnicos() }}</span>
+      <small>Pessoas que já doaram</small>
+    </div>
+  </div>
+
+  <div class="grid">
+    <section class="card-panel">
+      <h3>Top 5 Doadores</h3>
+      @if (topDoadores().length === 0) {
+        <p class="empty">Nenhuma doação registrada.</p>
+      } @else {
+        @for (r of topDoadores(); track r.nome; let i = $index) {
+          <div class="bar-row">
+            <div class="bar-info">
+              <span class="rank">#{{ i + 1 }}</span>
+              <span class="bar-name">{{ r.nome }}</span>
+              <span class="bar-value">{{ r.total }} itens</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill blue" [style.width.%]="porcentagem(r.total, maxDoador())"></div>
+            </div>
+          </div>
+        }
+      }
+    </section>
+
+    <section class="card-panel">
+      <h3>Top 5 Itens Doados</h3>
+      @if (topItens().length === 0) {
+        <p class="empty">Nenhuma doação registrada.</p>
+      } @else {
+        @for (r of topItens(); track r.nome; let i = $index) {
+          <div class="bar-row">
+            <div class="bar-info">
+              <span class="rank">#{{ i + 1 }}</span>
+              <span class="bar-name">{{ r.nome }}</span>
+              <span class="bar-value">{{ r.total }} un.</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill orange" [style.width.%]="porcentagem(r.total, maxItem())"></div>
+            </div>
+          </div>
+        }
+      }
+    </section>
+
+    <section class="card-panel full">
+      <h3>Últimas Distribuições</h3>
+      @if (ultimasDistribuicoes().length === 0) {
+        <p class="empty">Nenhuma cesta distribuída ainda.</p>
+      } @else {
+        <table>
+          <thead>
+            <tr>
+              <th>Beneficiário</th>
+              <th class="center">Cestas</th>
+              <th>Data</th>
+              <th>Por</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (d of ultimasDistribuicoes(); track d.id) {
+              <tr>
+                <td>{{ d.beneficiario }}</td>
+                <td class="center">{{ d.quantidadeCestas }}</td>
+                <td>{{ d.dataDistribuicao | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ d.usuarioNome }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </section>
+  </div>
+</div>
