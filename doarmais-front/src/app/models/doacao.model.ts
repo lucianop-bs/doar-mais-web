@@ -10,10 +10,3 @@ export interface DoacaoResponse {
   doador: string;
   data: string;
 }
-export interface CestaResponse {
-  total: number;
-}
-export interface EstoqueResponse {
-  nome: string;
-  qtd: number;
-}
