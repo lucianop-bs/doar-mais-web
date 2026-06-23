@@ -1,0 +1,39 @@
+<section class="card-panel">
+  <h3>Usuários</h3>
+
+  @if (usuarios().length === 0) {
+    <p class="empty">Nenhum usuário cadastrado.</p>
+  } @else {
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th class="center">Admin</th>
+            <th class="center">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (u of usuarios(); track u.id) {
+            <tr [class.selected]="u.id === selecionadoId()">
+              <td>{{ u.id }}</td>
+              <td>{{ u.nome }}</td>
+              <td>{{ u.email }}</td>
+              <td class="center">{{ u.isAdmin ? 'Sim' : 'Não' }}</td>
+              <td class="center actions">
+                <button class="btn-editar" (click)="selecionar.emit(u)" title="Editar">
+                  <i class="bi bi-pencil-fill"></i>
+                </button>
+                <button class="btn-remover" (click)="confirmarExclusao(u)" title="Excluir">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

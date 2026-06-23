@@ -1,0 +1,28 @@
+<div class="page">
+  <header class="page-header">
+    <button class="btn-voltar" (click)="voltar()">
+      <i class="bi bi-arrow-left"></i> Voltar
+    </button>
+    <h2>Gerenciamento de Usuários</h2>
+  </header>
+
+  <div class="content">
+    <div class="tabela">
+      <app-usuarios-tabela
+        [usuarios]="usuarios()"
+        [selecionadoId]="selecionado()?.id ?? null"
+        [meuId]="meuId"
+        (selecionar)="selecionar($event)"
+        (excluir)="excluir($event)"
+      />
+    </div>
+    <div class="form">
+      <app-usuario-form
+        [usuario]="selecionado()"
+        [podeEditarAdmin]="true"
+        (salvar)="salvar($event)"
+        (cancelar)="cancelar()"
+      />
+    </div>
+  </div>
+</div>

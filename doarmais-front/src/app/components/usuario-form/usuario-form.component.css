@@ -1,0 +1,70 @@
+.card-panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.card-panel h3 {
+  margin: 0 0 12px 0;
+  font-size: 1.1rem;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+}
+.field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--text-secondary);
+}
+.field input {
+  padding: 8px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+}
+.field-check {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+.btn-salvar,
+.btn-cancelar {
+  flex: 1;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  color: white;
+}
+.btn-salvar {
+  background: var(--success);
+}
+.btn-salvar:hover:not(:disabled) {
+  background: #047857;
+}
+.btn-cancelar {
+  background: var(--text-secondary);
+}
+.btn-cancelar:hover:not(:disabled) {
+  background: #475569;
+}
+.btn-salvar:disabled,
+.btn-cancelar:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+}

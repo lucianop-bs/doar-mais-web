@@ -1,0 +1,29 @@
+<section class="card-panel">
+  <h3>{{ usuario() ? 'Editar Usuário' : 'Selecione um usuário' }}</h3>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="field">
+      <label>Nome</label>
+      <input type="text" formControlName="nome" [disabled]="!usuario()" />
+    </div>
+    <div class="field">
+      <label>Email</label>
+      <input type="email" formControlName="email" [disabled]="!usuario()" />
+    </div>
+    @if (podeEditarAdmin()) {
+      <div class="field-check">
+        <input type="checkbox" id="isAdmin" formControlName="isAdmin" />
+        <label for="isAdmin">Administrador</label>
+      </div>
+    }
+
+    <div class="actions">
+      <button type="submit" class="btn-salvar" [disabled]="!usuario() || form.invalid">
+        Salvar
+      </button>
+      <button type="button" class="btn-cancelar" (click)="cancelar.emit()" [disabled]="!usuario()">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</section>
