@@ -10,3 +10,6 @@ Thumbs.db
 *.log
 log_de_auditoria.txt
 log_de_erros.txt
+
+# Documentos
+*.pdf

@@ -6,8 +6,6 @@ import com.doarmais.model.dto.request.UsuarioUpdateRequest;
 import com.doarmais.model.dto.response.CadastraUsuarioResponse;
 import com.doarmais.model.dto.response.UsuarioResponse;
 import com.doarmais.model.entity.UsuarioEntity;
-import com.doarmais.model.util.AuditLogger;
-import com.doarmais.model.util.Logger;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -25,27 +23,19 @@ public class UsuarioBO {
 
     @Transactional
     public CadastraUsuarioResponse criarUsuario(CadastroRequest request) {
-        AuditLogger.logAction("criarUsuarioService", request.email);
-        try {
+        Optional<UsuarioEntity> user = usuarioDAO.buscarPorEmail(request.email);
 
-            Optional<UsuarioEntity> user = usuarioDAO.buscarPorEmail(request.email);
-
-            if (user.isPresent()) {
-                throw new RuntimeException("Usuário já possui cadastro");
-            }
-            String senhaHash = BCrypt.hashpw(request.senha, BCrypt.gensalt(10));
-
-            UsuarioEntity novoUsuario = new UsuarioEntity(request.nome, request.email, senhaHash);
-            novoUsuario.setBeneficiario(request.isBeneficiario);
-
-            usuarioDAO.salvar(novoUsuario);
-
-            return new CadastraUsuarioResponse(novoUsuario.getId());
-
-        } catch (Exception e) {
-            Logger.logException("criarUsuarioService", request.email, e);
-            throw e;
+        if (user.isPresent()) {
+            throw new RuntimeException("Usuário já possui cadastro");
         }
+        String senhaHash = BCrypt.hashpw(request.senha, BCrypt.gensalt(10));
+
+        UsuarioEntity novoUsuario = new UsuarioEntity(request.nome, request.email, senhaHash);
+        novoUsuario.setBeneficiario(request.isBeneficiario);
+
+        usuarioDAO.salvar(novoUsuario);
+
+        return new CadastraUsuarioResponse(novoUsuario.getId());
     }
 
     public List<UsuarioResponse> listarTodos() {
@@ -81,7 +71,6 @@ public class UsuarioBO {
             user.setAdmin(request.isAdmin);
         }
 
-        AuditLogger.logAction("atualizarUsuario", emailLogado);
         return toResponse(user);
     }
 
@@ -96,7 +85,6 @@ public class UsuarioBO {
             throw new ForbiddenException("Sem permissão para excluir este usuário");
         }
 
-        AuditLogger.logAction("excluirUsuario", emailLogado);
         usuarioDAO.deletarPorId(id);
     }
 

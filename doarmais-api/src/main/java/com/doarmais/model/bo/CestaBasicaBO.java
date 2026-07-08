@@ -8,8 +8,6 @@ import com.doarmais.model.entity.DistribuicaoEntity;
 import com.doarmais.model.entity.ItemEntity;
 import com.doarmais.model.entity.TipoItemEntity;
 import com.doarmais.model.entity.UsuarioEntity;
-import com.doarmais.model.util.AuditLogger;
-import com.doarmais.model.util.Logger;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -21,7 +19,7 @@ import java.util.List;
 public class CestaBasicaBO {
     @Inject
     EstoqueDAO estoqueDAO;
-    
+
     @Inject
     TipoItemDAO tipoItemDAO;
 
@@ -35,77 +33,53 @@ public class CestaBasicaBO {
     JsonWebToken jwt;
 
     public List<ItemEntity> listarEstoque() {
-        AuditLogger.logAction("obterListaDeEstoqueService", "sistema");
-        try {
-            return estoqueDAO.listAll().stream()
-                    .map(e -> new ItemEntity(e.getTipoItem(), e.getQuantidade()))
-                    .toList();
-        } catch (Exception e) {
-            Logger.logException("obterListaDeEstoqueService", "sistema", e);
-            throw e;
-        }
+        return estoqueDAO.listAll().stream()
+                .map(e -> new ItemEntity(e.getTipoItem(), e.getQuantidade()))
+                .toList();
     }
 
     public int calcularTotalCestas() {
-        AuditLogger.logAction("criarCestaService", "sistema");
-        try {
-            var todosTipos = tipoItemDAO.listAll();
-            
-            if (todosTipos.isEmpty()) return 0;
+        var todosTipos = tipoItemDAO.listAll();
 
-            return todosTipos.stream()
-                    .mapToInt(tipo -> {
-                        var estoque = estoqueDAO.findById(tipo.getId());
-                        return (estoque != null) ? estoque.getQuantidade() : 0;
-                    })
-                    .min()
-                    .orElse(0);
-        } catch (Exception e) {
-            Logger.logException("criarCestaService", "sistema", e);
-            throw e;
-        }
+        if (todosTipos.isEmpty()) return 0;
+
+        return todosTipos.stream()
+                .mapToInt(tipo -> {
+                    var estoque = estoqueDAO.findById(tipo.getId());
+                    return (estoque != null) ? estoque.getQuantidade() : 0;
+                })
+                .min()
+                .orElse(0);
     }
 
     @Transactional
     public void distribuirCestas(DistribuicaoRequest request) {
         String email = jwt.getSubject();
-        AuditLogger.logAction("distribuirCestasService", email);
-        try {
-            int cestasPossiveis = calcularTotalCestas();
-            if (request.quantidadeCestas > cestasPossiveis) {
-                throw new RuntimeException("Estoque insuficiente para distribuir " + request.quantidadeCestas + " cestas.");
-            }
 
-            UsuarioEntity usuario = usuarioDAO.buscarPorEmail(email)
-                    .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-
-            var todosTipos = tipoItemDAO.listAll();
-            for (TipoItemEntity tipo : todosTipos) {
-                estoqueDAO.atualizarQuantidade(tipo, -request.quantidadeCestas);
-            }
-
-            DistribuicaoEntity distribuicao = new DistribuicaoEntity(
-                    request.beneficiario,
-                    request.quantidadeCestas,
-                    usuario
-            );
-            distribuicaoDAO.salvar(distribuicao);
-
-        } catch (Exception e) {
-            Logger.logException("distribuirCestasService", email, e);
-            throw e;
+        int cestasPossiveis = calcularTotalCestas();
+        if (request.quantidadeCestas > cestasPossiveis) {
+            throw new RuntimeException("Estoque insuficiente para distribuir " + request.quantidadeCestas + " cestas.");
         }
+
+        UsuarioEntity usuario = usuarioDAO.buscarPorEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        var todosTipos = tipoItemDAO.listAll();
+        for (TipoItemEntity tipo : todosTipos) {
+            estoqueDAO.atualizarQuantidade(tipo, -request.quantidadeCestas);
+        }
+
+        DistribuicaoEntity distribuicao = new DistribuicaoEntity(
+                request.beneficiario,
+                request.quantidadeCestas,
+                usuario
+        );
+        distribuicaoDAO.salvar(distribuicao);
     }
 
     public List<DistribuicaoResponse> listarDistribuicoes() {
-        AuditLogger.logAction("listarDistribuicoesService", "sistema");
-        try {
-            return distribuicaoDAO.buscarTodas().stream()
-                    .map(DistribuicaoMapper::toResponse)
-                    .toList();
-        } catch (Exception e) {
-            Logger.logException("listarDistribuicoesService", "sistema", e);
-            throw e;
-        }
+        return distribuicaoDAO.buscarTodas().stream()
+                .map(DistribuicaoMapper::toResponse)
+                .toList();
     }
 }

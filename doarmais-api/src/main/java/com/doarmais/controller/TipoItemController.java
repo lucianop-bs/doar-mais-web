@@ -1,8 +1,7 @@
 package com.doarmais.controller;
 
-import com.doarmais.model.dao.TipoItemDAO;
+import com.doarmais.model.bo.TipoItemBO;
 import com.doarmais.model.dto.response.TipoItemResponse;
-import com.doarmais.model.entity.TipoItemEntity;
 import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -20,16 +19,10 @@ import java.util.List;
 public class TipoItemController {
 
     @Inject
-    TipoItemDAO tipoItemDAO;
+    TipoItemBO tipoItemBO;
 
     @GET
     public List<TipoItemResponse> listar() {
-        return tipoItemDAO.listAll().stream()
-                .map(this::toResponse)
-                .toList();
-    }
-
-    private TipoItemResponse toResponse(TipoItemEntity t) {
-        return new TipoItemResponse(t.getId(), t.getNome(), t.getDescricao());
+        return tipoItemBO.listar();
     }
 }

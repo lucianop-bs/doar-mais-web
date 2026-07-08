@@ -1,8 +1,8 @@
 package com.doarmais.controller;
 
+import com.doarmais.model.dto.response.AutenticacaoResponse;
 import com.doarmais.model.bo.LoginBO;
 import com.doarmais.model.dto.request.LoginRequest;
-import com.doarmais.model.dto.response.LoginResponse;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -24,10 +24,10 @@ public class LoginController {
     @POST
     @Path("/login")
     public Response login(LoginRequest request) {
-        LoginResponse data = loginBO.autenticar(request);
+        AutenticacaoResponse result = loginBO.autenticar(request);
 
         NewCookie tokenCookie = new NewCookie.Builder("token")
-                .value(data.token)
+                .value(result.token())
                 .path("/")
                 .httpOnly(true)
                 .secure(false)
@@ -35,9 +35,7 @@ public class LoginController {
                 .maxAge((int) Duration.ofHours(8).toSeconds())
                 .build();
 
-        data.token = null;
-
-        return Response.ok(data).cookie(tokenCookie).build();
+        return Response.ok(result.dados()).cookie(tokenCookie).build();
     }
 
     @POST

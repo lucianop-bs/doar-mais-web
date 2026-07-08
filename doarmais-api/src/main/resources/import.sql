@@ -1,9 +1,9 @@
+DELETE FROM audit_logs;
 DELETE FROM distribuicoes;
 DELETE FROM doacoes;
 DELETE FROM tipo_itens;
 DELETE FROM usuarios;
 
--- Itens Padrão
 INSERT INTO tipo_itens (nome, descricao) VALUES ('ARROZ', 'Arroz Agulhinha 5kg');
 INSERT INTO tipo_itens (nome, descricao) VALUES ('FEIJAO', 'Feijão Carioca 1kg');
 INSERT INTO tipo_itens (nome, descricao) VALUES ('MACARRAO', 'Macarrão Espaguete 500g');
