@@ -10,7 +10,6 @@ export interface CadastroRequest {
 }
 
 export interface LoginResponse {
-  token?: string | null;
   nome: string;
   id: number;
   isAdmin: boolean;

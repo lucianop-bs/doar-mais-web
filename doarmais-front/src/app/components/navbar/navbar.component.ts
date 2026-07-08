@@ -12,6 +12,7 @@ export class NavbarComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
   isLogged = this.authService.isLogged;
+  isAdmin = this.authService.isAdmin;
 
   logout() {
     this.authService.logout().subscribe({

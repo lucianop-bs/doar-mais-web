@@ -66,8 +66,9 @@ export class DashboardComponent implements OnInit {
         this.total.set(r.total.total);
         this.carregando.set(false);
       },
-      error: () => {
+      error: (err) => {
         this.carregando.set(false);
+        if (err.status === 0 || err.status >= 500) return;
         this.notificacao.erro('Erro ao carregar dados do dashboard.');
       },
     });
@@ -79,8 +80,10 @@ export class DashboardComponent implements OnInit {
         this.notificacao.sucesso('Doação removida.');
         this.refresh();
       },
-      error: (err) =>
-        this.notificacao.erro(err?.error?.message ?? 'Erro ao remover doação.'),
+      error: (err) => {
+        if (err.status === 0 || err.status >= 500) return;
+        this.notificacao.erro(err?.error?.message ?? 'Erro ao remover doação.');
+      },
     });
   }
 
@@ -90,8 +93,10 @@ export class DashboardComponent implements OnInit {
         this.notificacao.sucesso(`${req.quantidadeCestas} cesta(s) entregue(s) a ${req.beneficiario}.`);
         this.refresh();
       },
-      error: (err) =>
-        this.notificacao.erro(err?.error?.message ?? 'Erro ao distribuir cestas.'),
+      error: (err) => {
+        if (err.status === 0 || err.status >= 500) return;
+        this.notificacao.erro(err?.error?.message ?? 'Erro ao distribuir cestas.');
+      },
     });
   }
 }

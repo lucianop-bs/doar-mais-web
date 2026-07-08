@@ -11,6 +11,7 @@ import {
 import { DoacaoRequest } from '../../models/doacao.model';
 import { TipoItemResponse } from '../../models/tipo-item.model';
 import { DoacaoService } from '../../services/doacao/doacao.service';
+import { NotificacaoService } from '../../services/notificacao/notificacao.service';
 import { TipoItemService } from '../../services/tipo-item/tipo-item.service';
 
 @Component({
@@ -23,6 +24,7 @@ export class DoacaoComponent implements OnInit {
   private fb = inject(FormBuilder);
   private doacaoService = inject(DoacaoService);
   private tipoItemService = inject(TipoItemService);
+  private notificacao = inject(NotificacaoService);
 
   doacaoSalva = output<void>();
 
@@ -49,7 +51,12 @@ export class DoacaoComponent implements OnInit {
   ngOnInit() {
     this.tipoItemService.listar().subscribe({
       next: (tipos) => this.tiposItem.set(tipos),
-      error: () => this.errorMessage.set('Erro ao carregar catálogo de itens.'),
+      error: (err) => {
+        if (err.status === 0 || err.status >= 500) return;
+        const msg = 'Erro ao carregar catálogo de itens.';
+        this.errorMessage.set(msg);
+        this.notificacao.erro(msg);
+      },
     });
   }
 
@@ -96,9 +103,15 @@ export class DoacaoComponent implements OnInit {
       next: () => {
         this.listaDeItens.set([]);
         this.errorMessage.set(null);
+        this.notificacao.sucesso('Doação registrada com sucesso.');
         this.doacaoSalva.emit();
       },
-      error: (err) => this.errorMessage.set(err?.error?.message ?? 'Erro ao salvar doação.'),
+      error: (err) => {
+        if (err.status === 0 || err.status >= 500) return;
+        const msg = err?.error?.message ?? 'Erro ao salvar doação.';
+        this.errorMessage.set(msg);
+        this.notificacao.erro(msg);
+      },
     });
   }
 

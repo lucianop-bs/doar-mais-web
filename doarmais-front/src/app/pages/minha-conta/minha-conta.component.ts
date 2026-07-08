@@ -47,8 +47,10 @@ export class MinhaContaComponent implements OnInit {
         this.authService.atualizarUsuarioLocal(atualizado);
         this.notificacao.sucesso('Dados atualizados com sucesso.');
       },
-      error: (err) =>
-        this.notificacao.erro(err?.error?.message ?? 'Erro ao atualizar conta.'),
+      error: (err) => {
+        if (err.status === 0 || err.status >= 500) return;
+        this.notificacao.erro(err?.error?.message ?? 'Erro ao atualizar conta.');
+      },
     });
   }
 
@@ -72,8 +74,10 @@ export class MinhaContaComponent implements OnInit {
           error: () => this.router.navigate(['/home']),
         });
       },
-      error: (err) =>
-        this.notificacao.erro(err?.error?.message ?? 'Erro ao excluir conta.'),
+      error: (err) => {
+        if (err.status === 0 || err.status >= 500) return;
+        this.notificacao.erro(err?.error?.message ?? 'Erro ao excluir conta.');
+      },
     });
   }
 

@@ -23,6 +23,11 @@
             <a class="nav-link text" routerLink="/dashboard" routerLinkActive="active">Estoque</a>
           </li>
         }
+        @if (isLogged() && isAdmin()) {
+          <li class="nav-item text">
+            <a class="nav-link text" routerLink="/auditoria" routerLinkActive="active">Auditoria</a>
+          </li>
+        }
         @if (!isLogged()) {
           <li class="nav-item">
             <a class="nav-link text" routerLink="/login" routerLinkActive="active">Login</a>

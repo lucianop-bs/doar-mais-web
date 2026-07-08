@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NotificacaoService } from '../../services/notificacao/notificacao.service';
 
 @Component({
   selector: 'app-cadastro',
@@ -13,6 +14,7 @@ export class CadastroComponent {
   private authService = inject(AuthService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
+  private notificacao = inject(NotificacaoService);
 
   errorMessage = signal<string | null>(null);
   sucessoMessage = signal<string | null>(null);
@@ -27,11 +29,17 @@ export class CadastroComponent {
     if (this.cadastroForm.valid) {
       const dados = this.cadastroForm.value;
       this.authService.cadastrar(dados).subscribe({
-        next: (res) => {
+        next: () => {
+          this.notificacao.sucesso('Cadastro realizado com sucesso!');
           this.router.navigate(['/login']);
         },
         error: (err) => {
-          this.errorMessage.set(err.error.message);
+          if (err.status === 0 || err.status >= 500) {
+            return;
+          }
+          const msg = err?.error?.message ?? 'Erro ao realizar cadastro.';
+          this.errorMessage.set(msg);
+          this.notificacao.erro(msg);
         },
       });
     }

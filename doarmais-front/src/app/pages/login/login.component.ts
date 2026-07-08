@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
+import { NotificacaoService } from '../../services/notificacao/notificacao.service';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,7 @@ export class LoginComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private notificacao = inject(NotificacaoService);
 
   errorMessage = signal<string | null>(null);
 
@@ -26,12 +28,16 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const dadosLogin = this.loginForm.value;
       this.authService.login(dadosLogin).subscribe({
-        next: (res) => {
-          console.log('Login realizado com sucesso!', res);
+        next: () => {
           this.router.navigate(['/dashboard']);
         },
         error: (err) => {
-          this.errorMessage.set('E-mail ou senha incorretos.');
+          if (err.status === 0 || err.status >= 500) {
+            return;
+          }
+          const msg = err?.error?.message ?? 'E-mail ou senha incorretos.';
+          this.errorMessage.set(msg);
+          this.notificacao.erro(msg);
         },
       });
     }

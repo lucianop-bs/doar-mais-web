@@ -78,7 +78,10 @@ export class RelatoriosComponent implements OnInit {
         this.distribuicoes.set(r.distribuicoes);
         this.totalDisponivel.set(r.total.total);
       },
-      error: () => this.notificacao.erro('Erro ao carregar relatórios.'),
+      error: (err) => {
+        if (err.status === 0 || err.status >= 500) return;
+        this.notificacao.erro('Erro ao carregar relatórios.');
+      },
     });
   }
 

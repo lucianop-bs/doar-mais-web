@@ -32,7 +32,10 @@ export class UsuariosComponent implements OnInit {
   recarregar() {
     this.usuarioService.listarTodos().subscribe({
       next: (lista) => this.usuarios.set(lista),
-      error: () => this.notificacao.erro('Erro ao carregar usuários.'),
+      error: (err) => {
+        if (err.status === 0 || err.status >= 500) return;
+        this.notificacao.erro('Erro ao carregar usuários.');
+      },
     });
   }
 
@@ -53,8 +56,10 @@ export class UsuariosComponent implements OnInit {
         this.selecionado.set(null);
         this.recarregar();
       },
-      error: (err) =>
-        this.notificacao.erro(err?.error?.message ?? 'Erro ao atualizar usuário.'),
+      error: (err) => {
+        if (err.status === 0 || err.status >= 500) return;
+        this.notificacao.erro(err?.error?.message ?? 'Erro ao atualizar usuário.');
+      },
     });
   }
 
@@ -65,7 +70,10 @@ export class UsuariosComponent implements OnInit {
         if (this.selecionado()?.id === u.id) this.selecionado.set(null);
         this.recarregar();
       },
-      error: (err) => this.notificacao.erro(err?.error?.message ?? 'Erro ao excluir usuário.'),
+      error: (err) => {
+        if (err.status === 0 || err.status >= 500) return;
+        this.notificacao.erro(err?.error?.message ?? 'Erro ao excluir usuário.');
+      },
     });
   }
 
