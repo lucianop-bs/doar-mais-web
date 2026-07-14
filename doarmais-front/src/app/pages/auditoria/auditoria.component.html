@@ -1,0 +1,74 @@
+<div class="page">
+  <header class="page-header">
+    <button class="btn-voltar" (click)="voltar()">
+      <i class="bi bi-arrow-left"></i> Voltar
+    </button>
+    <h2>Logs de Auditoria</h2>
+    <button class="btn-recarregar" (click)="recarregar()" title="Recarregar">
+      <i class="bi bi-arrow-clockwise"></i> Recarregar
+    </button>
+  </header>
+
+  <section class="filtros">
+    <div class="filtro">
+      <label for="filtroUsuario">Usuário</label>
+      <input
+        id="filtroUsuario"
+        type="text"
+        placeholder="Filtrar por usuário"
+        [ngModel]="filtroUsuario()"
+        (ngModelChange)="filtroUsuario.set($event)"
+      />
+    </div>
+    <div class="filtro">
+      <label for="filtroAcao">Ação</label>
+      <input
+        id="filtroAcao"
+        type="text"
+        placeholder="Filtrar por ação"
+        [ngModel]="filtroAcao()"
+        (ngModelChange)="filtroAcao.set($event)"
+      />
+    </div>
+    <div class="resumo">
+      <strong>{{ logsFiltrados().length }}</strong> de {{ logs().length }} registros
+    </div>
+  </section>
+
+  <section class="card-panel">
+    @if (logsFiltrados().length === 0) {
+      <p class="empty">Nenhum registro encontrado.</p>
+    } @else {
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Data/Hora</th>
+              <th>Usuário</th>
+              <th>Ação</th>
+              <th class="center">Status</th>
+              <th>IP</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (log of logsFiltrados(); track log.id) {
+              <tr>
+                <td>{{ log.id }}</td>
+                <td>{{ log.dataHora | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
+                <td>{{ log.usuario }}</td>
+                <td class="acao">{{ log.acao }}</td>
+                <td class="center">
+                  <span class="badge" [class]="classeStatus(log.statusHttp)">
+                    {{ log.statusHttp }}
+                  </span>
+                </td>
+                <td>{{ log.ip || '-' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+</div>
